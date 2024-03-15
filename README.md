@@ -379,28 +379,28 @@ $ git push
 - **Deployment Stage**: The API is deployed to a "prod" stage. This could imply that different stages (e.g., dev, test, prod) are used for different phases of development, which is a good practice for managing changes and reducing the risk of errors in production.
 - **Secure Configuration**: The configuration for the API, including sensitive information like the User Pool ID and Client ID, is stored in a separate config.js file. This is a good practice as it separates configuration from code, making it easier to manage and secure.
 
-## Cost Analysis - An estimate
+## Cost Analysis - Why Choose Serverless?
 
-- AWS Lambda: 
+### AWS Lambda: 
 * AWS Lambda is charged based on the number of requests and the duration of the compute time.
 * Pricing: $0.20 per 1 million requests and $0.00001667 for every GB-second. (Lambda free tier covers 1 million requests per month)
 * Lets say for 500 visits to the website per month, could be around a few cents to a couple of dollars.
 
-- Amazon API Gateway:
+### Amazon API Gateway:
 * Amazon API Gateway is charged based on the number of API calls received and data transfer out.
 * Pricing: $3.50 per million API calls and $0.09 per GB of data transferred out.
 * For 500 visits: Could range from a few cents to a few dollars depending on the data transfer.
 
-- AWS Amplify:
+### AWS Amplify:
 * Pricing for AWS Amplify is based on usage of backend resources such as API calls, storage, and data transfer.
 * For 500 visits: Cost depends on the resources used, but could be within a few dollars.
 
-- Amazon DynamoDB:
+### Amazon DynamoDB:
 * Amazon DynamoDB is charged based on provisioned capacity and actual usage.
 * Pricing: Variable based on provisioned capacity, read/write throughput, and storage.
 * 500 visits: Cost varies depending on the read/write capacity and storage requirements, but could range from a few cents to several dollars.
 
-- Amazon Cognito:
+### Amazon Cognito:
 * Amazon Cognito pricing is based on monthly active users (MAUs).
 * Pricing: $0.0055 per MAU.
 * For 500 visits: Cost would depend on the number of unique users accessing the site. Could be within a few cents to a couple of dollars.
