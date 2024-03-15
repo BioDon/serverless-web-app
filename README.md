@@ -58,6 +58,8 @@ Next you will use the AWS Amplify Console to deploy the website you've just comm
 
 ![CodeCommit Build and Deploy](./images/buildcode.png)
 
+![Website](./images/website.png)
+
 The awesome feature of AWS Amplify is the automatic deployment in case you make any changes to the code in your repository and push it CodeCommit.
 
 ## Step 2 - Manage Users with Amazon Cognito
@@ -363,6 +365,44 @@ $ git push
 - If you are redirected to the ArcGIS sign-in page, sign in with the user credentials you created previously in the Introduction section as a prerequisite of this tutorial.
 - After the map has loaded, click anywhere on the map to set a pickup location.
 - Choose Request Unicorn. You should see a notification in the right sidebar that a unicorn is on its way and then see a unicorn icon fly to your pickup location.
-- Choose rides multiple times and see how entries for new drivers also populate DynamoDB table. These drivers names appear in the lambda function.
+- Choose rides multiple times and see how entries for new drivers also populate DynamoDB table. These drivers details appear in the lambda function.
+
+![Website showcase](./images/giddyup.png)
 
 
+## Security Analysis for this Serverless Infrastructure
+
+- **Authentication and Authorization**: The API uses Amazon Cognito for user authentication and authorization. Cognito User Pools are used to manage and authenticate users, and to generate unique tokens for authenticated users. These tokens are then used to access the API.
+- **API Gateway Authorizer**: An API Gateway Authorizer is set up to control access to the API. This authorizer uses the Cognito User Pool to check if an incoming request is authenticated.
+- **Lambda Function Integration**: The API is integrated with a Lambda function (RequestUnicorn) using a Lambda proxy integration. This means that the API Gateway service is responsible for request and response transformations.
+- **CORS**: ross-Origin Resource Sharing (CORS) is enabled for the API. This is a security measure that allows or restricts requested resources based on the domain that made the request.
+- **Deployment Stage**: The API is deployed to a "prod" stage. This could imply that different stages (e.g., dev, test, prod) are used for different phases of development, which is a good practice for managing changes and reducing the risk of errors in production.
+- **Secure Configuration**: The configuration for the API, including sensitive information like the User Pool ID and Client ID, is stored in a separate config.js file. This is a good practice as it separates configuration from code, making it easier to manage and secure.
+
+## Cost Analysis - An estimate
+
+- AWS Lambda: 
+* AWS Lambda is charged based on the number of requests and the duration of the compute time.
+* Pricing: $0.20 per 1 million requests and $0.00001667 for every GB-second. (Lambda free tier covers 1 million requests per month)
+* Lets say for 500 visits to the website per month, could be around a few cents to a couple of dollars.
+
+- Amazon API Gateway:
+* Amazon API Gateway is charged based on the number of API calls received and data transfer out.
+* Pricing: $3.50 per million API calls and $0.09 per GB of data transferred out.
+* For 500 visits: Could range from a few cents to a few dollars depending on the data transfer.
+
+- AWS Amplify:
+* Pricing for AWS Amplify is based on usage of backend resources such as API calls, storage, and data transfer.
+* For 500 visits: Cost depends on the resources used, but could be within a few dollars.
+
+- Amazon DynamoDB:
+* Amazon DynamoDB is charged based on provisioned capacity and actual usage.
+* Pricing: Variable based on provisioned capacity, read/write throughput, and storage.
+* 500 visits: Cost varies depending on the read/write capacity and storage requirements, but could range from a few cents to several dollars.
+
+- Amazon Cognito:
+* Amazon Cognito pricing is based on monthly active users (MAUs).
+* Pricing: $0.0055 per MAU.
+* For 500 visits: Cost would depend on the number of unique users accessing the site. Could be within a few cents to a couple of dollars.
+
+In summary, serverless architectures like those offered by AWS Lambda, Amazon API Gateway, AWS Amplify, DynamoDB, and Cognito can significantly reduce costs compared to traditional server-based setups. With their pay-as-you-go pricing models and automatic scaling, they provide cost-efficient solutions for varying workloads. Additionally, they offer the flexibility to scale resources up or down based on demand, ensuring optimal cost management and resource utilization.
